@@ -15,11 +15,11 @@
 package com.cloudera.oryx.kmeans.common;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,8 +40,8 @@ public final class MostStableEvalStrategy implements KMeansEvalStrategy {
 
   @Override
   public List<ClusterValidityStatistics> evaluate(List<ClusterValidityStatistics> stats) {
-    Map<Integer, ClusterValidityStatistics> bestPerK = Maps.newHashMap();
-    Map<Integer, List<Double>> metrics = Maps.newHashMap();
+    Map<Integer, ClusterValidityStatistics> bestPerK = new HashMap<>();
+    Map<Integer, List<Double>> metrics = new HashMap<>();
     for (ClusterValidityStatistics stat : stats) {
       if (stat.getK() > 1) {
         ClusterValidityStatistics best = bestPerK.get(stat.getK());
@@ -50,7 +50,7 @@ public final class MostStableEvalStrategy implements KMeansEvalStrategy {
         }
         List<Double> m = metrics.get(stat.getK());
         if (m == null) {
-          m = Lists.newArrayList();
+          m = new ArrayList<>();
           metrics.put(stat.getK(), m);
         }
         m.add(useVariationOfInformation ? stat.getVariationOfInformation() : stat.getVanDongen());
