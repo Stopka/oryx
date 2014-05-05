@@ -78,6 +78,21 @@
         <artifactId>oryx-rdf-computation</artifactId>
         <version>${project.version}</version>
       </dependency>
+        <dependency>
+            <groupId>com.cloudera.oryx</groupId>
+            <artifactId>oryx-bn-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.cloudera.oryx</groupId>
+            <artifactId>oryx-bn-serving</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.cloudera.oryx</groupId>
+            <artifactId>oryx-bn-computation</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
       <dependency>
         <groupId>com.cloudera.oryx</groupId>
@@ -358,6 +373,9 @@
     <module>rdf-common</module>
     <module>rdf-serving</module>
     <module>rdf-computation</module>
+      <module>bn-common</module>
+      <module>bn-serving</module>
+      <module>bn-computation</module>
     <module>computation-common</module>
     <module>computation</module>
     <module>serving-common</module>
