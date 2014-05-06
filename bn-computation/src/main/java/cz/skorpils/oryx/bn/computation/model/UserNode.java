@@ -30,6 +30,19 @@ public class UserNode extends Node<ItemNode,VoteNode> {
 
     @Override
     protected double weight(long idA, int valA, long idB, int valB) {
-        //TODO
+        switch (valA){
+            case 0:
+                if(valB==0){
+                    return 1/container.size();
+                }
+                return 0;
+            case 1:
+                if(valB==ratings.get(idB)){
+                    return 1/container.size();
+                }
+                return 0;
+            default:
+                return 0;
+        }
     }
 }
