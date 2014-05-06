@@ -29,11 +29,8 @@ import java.util.ArrayList;
 
 import com.google.common.io.Files;
 import com.typesafe.config.Config;
-import cz.skorpils.oryx.bn.computation.model.FeatureNode;
-import cz.skorpils.oryx.bn.computation.model.ItemNode;
+import cz.skorpils.oryx.bn.computation.model.*;
 import cz.skorpils.oryx.bn.computation.model.NamedMatrix;
-import cz.skorpils.oryx.bn.computation.model.UserNode;
-import cz.skorpils.oryx.bn.computation.model.VoteNode;
 
 public final class BNLocalGenerationRunner extends LocalGenerationRunner {
 
@@ -67,10 +64,10 @@ public final class BNLocalGenerationRunner extends LocalGenerationRunner {
 
             Config config = ConfigUtils.getDefaultConfig();
 
-            LongObjectMap<FeatureNode> features = new BuildFeatureMatrix().call();
-            LongObjectMap<ItemNode> items = new BuildItemMatrix(features, currentInboundDir).call();
-            LongObjectMap<UserNode> users = new BuildUserMatrix(items, currentInboundDir).call();
-            LongObjectMap<VoteNode> votes = new BuildVoteMatrix(users).call();
+            NodeContainer<FeatureNode> features = new BuildFeatureMatrix().call();
+            NodeContainer<ItemNode> items = new BuildItemMatrix(features, currentInboundDir).call();
+            NodeContainer<UserNode> users = new BuildUserMatrix(items, currentInboundDir).call();
+            NodeContainer<VoteNode> votes = new BuildVoteMatrix(users).call();
 
             if (RbyRow.isEmpty() || RbyColumn.isEmpty()) {
                 return;

@@ -4,6 +4,7 @@ import com.cloudera.oryx.common.collection.LongObjectMap;
 import com.cloudera.oryx.common.settings.ConfigUtils;
 import com.typesafe.config.Config;
 import cz.skorpils.oryx.bn.computation.model.ItemNode;
+import cz.skorpils.oryx.bn.computation.model.NodeContainer;
 import cz.skorpils.oryx.bn.computation.model.UserNode;
 import cz.skorpils.oryx.bn.computation.model.VoteNode;
 import org.slf4j.Logger;
@@ -16,27 +17,27 @@ import java.util.concurrent.Callable;
 /**
  * Created by stopka on 6.5.14.
  */
-public class BuildVoteMatrix implements Callable<LongObjectMap<VoteNode>> {
-    LongObjectMap<UserNode> users;
+public class BuildVoteMatrix implements Callable<NodeContainer<VoteNode>> {
+    NodeContainer<UserNode> users;
     int coefficient;
     private static final Logger log = LoggerFactory.getLogger(BuildVoteMatrix.class);
 
-    public BuildVoteMatrix(LongObjectMap<UserNode> users) {
+    public BuildVoteMatrix(NodeContainer<UserNode> users) {
         this.users = users;
         Config config = ConfigUtils.getDefaultConfig();
         coefficient = config.getInt("model.correlation-coefficient");
     }
 
     @Override
-    public LongObjectMap<VoteNode> call() throws IOException {
+    public NodeContainer<VoteNode> call() throws IOException {
         log.info("Building vote nodes");
-        LongObjectMap<VoteNode> nodes = new LongObjectMap<VoteNode>();
+        NodeContainer<VoteNode> nodes = new NodeContainer<VoteNode>(users);
         Iterator<Long> users_keys = users.keySetIterator();
         while (users_keys.hasNext()) {
             long user = users_keys.next();
             UserNode nodeA = users.get(user);
             VoteNode node = new VoteNode(nodeA);
-            nodes.put(node.getId(), node);
+            nodes.put(node);
             Iterator<Long> users_keysB = users.keySetIterator();
             while (users_keysB.hasNext()) {
                 long userB = users_keysB.next();

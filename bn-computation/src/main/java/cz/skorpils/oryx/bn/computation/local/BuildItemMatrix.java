@@ -8,6 +8,7 @@ import com.cloudera.oryx.common.settings.ConfigUtils;
 import com.typesafe.config.Config;
 import cz.skorpils.oryx.bn.computation.model.FeatureNode;
 import cz.skorpils.oryx.bn.computation.model.ItemNode;
+import cz.skorpils.oryx.bn.computation.model.NodeContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,17 +20,17 @@ import java.util.concurrent.Callable;
 /**
  * Created by stopka on 6.5.14.
  */
-public class BuildItemMatrix implements Callable<LongObjectMap<ItemNode>> {
+public class BuildItemMatrix implements Callable<NodeContainer<ItemNode>> {
     File inputDir;
     String featureFileTag;
     Integer[] featureColumns;
     String[] featureNames;
     Integer name_col;
     Integer id_col;
-    LongObjectMap<FeatureNode> features;
+    NodeContainer<FeatureNode> features;
     private static final Logger log = LoggerFactory.getLogger(BuildItemMatrix.class);
 
-    public BuildItemMatrix(LongObjectMap<FeatureNode> features, File inputDir) {
+    public BuildItemMatrix(NodeContainer<FeatureNode> features, File inputDir) {
         this.features = features;
         this.inputDir = inputDir;
         Config config = ConfigUtils.getDefaultConfig();
@@ -41,7 +42,7 @@ public class BuildItemMatrix implements Callable<LongObjectMap<ItemNode>> {
     }
 
     @Override
-    public LongObjectMap<ItemNode> call() throws IOException {
+    public NodeContainer<ItemNode> call() throws IOException {
         log.info("Building item nodes");
         File[] inputFiles = getDemandedFiles();
         if (inputFiles == null || inputFiles.length == 0) {
@@ -49,7 +50,7 @@ public class BuildItemMatrix implements Callable<LongObjectMap<ItemNode>> {
             return null;
         }
 
-        LongObjectMap<ItemNode> nodes = new LongObjectMap<ItemNode>();
+        NodeContainer<ItemNode> nodes = new NodeContainer<ItemNode>(features);
         for (File inputFile : inputFiles) {
             log.info("  reading {}", inputFile);
             for (CharSequence line : new FileLineIterable(inputFile)) {
@@ -60,7 +61,7 @@ public class BuildItemMatrix implements Callable<LongObjectMap<ItemNode>> {
                         node.addParent(features.get(i));
                     }
                 }
-                nodes.put(node.getId(), node);
+                nodes.put(node);
             }
         }
         return nodes;

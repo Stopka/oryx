@@ -7,6 +7,7 @@ import com.cloudera.oryx.common.iterator.FileLineIterable;
 import com.cloudera.oryx.common.settings.ConfigUtils;
 import com.typesafe.config.Config;
 import cz.skorpils.oryx.bn.computation.model.ItemNode;
+import cz.skorpils.oryx.bn.computation.model.NodeContainer;
 import cz.skorpils.oryx.bn.computation.model.UserNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,17 +20,17 @@ import java.util.concurrent.Callable;
 /**
  * Created by stopka on 6.5.14.
  */
-public class BuildUserMatrix implements Callable<LongObjectMap<UserNode>> {
+public class BuildUserMatrix implements Callable<NodeContainer<UserNode>> {
     File inputDir;
     String featureFileTag;
     int item_col;
     int user_col;
     int value_col;
     int max_value;
-    LongObjectMap<ItemNode> items;
+    NodeContainer<ItemNode> items;
     private static final Logger log = LoggerFactory.getLogger(BuildUserMatrix.class);
 
-    public BuildUserMatrix(LongObjectMap<ItemNode> items, File inputDir) {
+    public BuildUserMatrix(NodeContainer<ItemNode> items, File inputDir) {
         this.items = items;
         this.inputDir = inputDir;
         Config config = ConfigUtils.getDefaultConfig();
@@ -41,14 +42,14 @@ public class BuildUserMatrix implements Callable<LongObjectMap<UserNode>> {
     }
 
     @Override
-    public LongObjectMap<UserNode> call() throws IOException {
+    public NodeContainer<UserNode> call() throws IOException {
         log.info("Building user nodes");
         File[] inputFiles = getDemandedFiles();
         if (inputFiles == null || inputFiles.length == 0) {
             log.info("  no input files in {}", inputDir);
             return null;
         }
-        LongObjectMap<UserNode> nodes = new LongObjectMap<UserNode>();
+        NodeContainer<UserNode> nodes = new NodeContainer<UserNode>(items);
         for (File inputFile : inputFiles) {
             log.info("  reading {}", inputFile);
             for (CharSequence line : new FileLineIterable(inputFile)) {
@@ -61,7 +62,7 @@ public class BuildUserMatrix implements Callable<LongObjectMap<UserNode>> {
                     node = nodes.get(user);
                 } else {
                     node = new UserNode(user, max_value);
-                    nodes.put(node.getId(), node);
+                    nodes.put(node);
                 }
                 node.addParent(items.get(item), value);
             }

@@ -5,7 +5,7 @@ import com.cloudera.oryx.common.collection.LongObjectMap;
 /**
  * Created by stopka on 6.5.14.
  */
-public class UserNode extends Node<ItemNode> {
+public class UserNode extends Node<ItemNode,VoteNode> {
     LongObjectMap<Integer> ratings = new LongObjectMap<Integer>();
     int maxValue;
     int ratingSum=0;
@@ -26,5 +26,10 @@ public class UserNode extends Node<ItemNode> {
 
     public double getMeanRating(){
         return (double)ratingSum/(double)ratings.size();
+    }
+
+    @Override
+    protected double weight(long idA, int valA, long idB, int valB) {
+        //TODO
     }
 }
