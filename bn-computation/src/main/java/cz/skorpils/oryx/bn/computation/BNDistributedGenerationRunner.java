@@ -27,7 +27,7 @@ import java.util.List;
 
 public final class BNDistributedGenerationRunner extends DistributedGenerationRunner {
 
-  private static final Logger log = LoggerFactory.getLogger(BNDistributedGenerationRunner.class);
+    private static final Logger log = LoggerFactory.getLogger(BNDistributedGenerationRunner.class);
 
 
     @Override

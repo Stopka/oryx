@@ -44,6 +44,10 @@
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
+      <dependency>
+          <groupId>edu.cmu.cs.javabayes</groupId>
+          <artifactId>ebayes</artifactId>
+          <version>0.1</version>
+      </dependency>
   </dependencies>
-
 </project>
