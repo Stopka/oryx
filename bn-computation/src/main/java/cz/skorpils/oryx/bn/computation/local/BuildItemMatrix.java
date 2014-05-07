@@ -76,7 +76,7 @@ public class BuildItemMatrix implements Callable<NodeContainer<ItemNode>> {
                 result.add(inputFile);
             }
         }
-        return (File[]) result.toArray();
+        return result.toArray(new File[result.size()]);
     }
 
     protected boolean isFileDemanded(File file) {

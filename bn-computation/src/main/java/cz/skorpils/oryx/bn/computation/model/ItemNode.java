@@ -41,4 +41,9 @@ public class ItemNode extends Node<FeatureNode,UserNode> {
         }
         return top/(bottomLeft*bottomRight);
     }
+
+    @Override
+    public String toString() {
+        return "I"+super.toString()+" "+name;
+    }
 }

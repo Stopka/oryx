@@ -43,4 +43,9 @@ public class UserNode extends Node<ItemNode,VoteNode> {
                 return 0;
         }
     }
+
+    @Override
+    public String toString() {
+        return "U"+super.toString()+" "+ratings.toString();
+    }
 }

@@ -45,4 +45,9 @@ public abstract class Node<ParentNodeType extends Node,ChildrenNodeType extends 
     }
 
     abstract protected double weight(long idA,int valA,long idB,int valB);
+
+    @Override
+    public String toString() {
+        return Long.toString(id);
+    }
 }

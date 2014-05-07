@@ -64,6 +64,7 @@ public final class BNLocalGenerationRunner extends LocalGenerationRunner {
             NodeContainer<ItemNode> items = new BuildItemMatrix(features, currentInboundDir).call();
             NodeContainer<UserNode> users = new BuildUserMatrix(items, currentInboundDir).call();
             NodeContainer<VoteNode> votes = new BuildVoteMatrix(users).call();
+            System.out.println("Done");
             /*
             if (RbyRow.isEmpty() || RbyColumn.isEmpty()) {
                 return;
@@ -87,7 +88,9 @@ public final class BNLocalGenerationRunner extends LocalGenerationRunner {
 
             store.uploadDirectory(generationPrefix, tempOutDir, false);
             */
-        } finally {
+        }catch (Exception e){
+            System.err.println(e);
+        }finally {
             IOUtils.deleteRecursively(currentInboundDir);
             IOUtils.deleteRecursively(tempOutDir);
         }

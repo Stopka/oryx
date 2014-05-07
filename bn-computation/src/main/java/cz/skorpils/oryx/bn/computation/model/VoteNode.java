@@ -22,4 +22,9 @@ public class VoteNode extends Node<UserNode,Node> {
         //TODO
         return (1-container.getStorageValue("alpha"))*-1/((parents.size()-1)*(-1+container.getStorageValue("beta")));
     }
+
+    @Override
+    public String toString() {
+        return "V"+super.toString()+" "+originalNode.ratings.toString();
+    }
 }

@@ -82,7 +82,7 @@ public class BuildUserMatrix implements Callable<NodeContainer<UserNode>> {
                 result.add(inputFile);
             }
         }
-        return (File[]) result.toArray();
+        return result.toArray(new File[result.size()]);
     }
 
     protected boolean isFileDemanded(File file) {

@@ -28,5 +28,9 @@ public class FeatureNode extends Node<Node,ItemNode> {
         return 0;
     }
 
+    @Override
+    public String toString() {
+        return "F"+super.toString()+" "+name;
+    }
 
 }

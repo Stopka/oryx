@@ -20,7 +20,7 @@ import java.util.concurrent.Callable;
  */
 public class BuildVoteMatrix implements Callable<NodeContainer<VoteNode>> {
     NodeContainer<UserNode> users;
-    int correlation;
+    double correlation;
     double alpha;
     double beta;
     double qi;
@@ -29,10 +29,10 @@ public class BuildVoteMatrix implements Callable<NodeContainer<VoteNode>> {
     public BuildVoteMatrix(NodeContainer<UserNode> users) {
         this.users = users;
         Config config = ConfigUtils.getDefaultConfig();
-        alpha = config.getInt("model.vote.alpha");
-        beta = config.getInt("model.vote.beta");
-        qi = config.getInt("model.vote.qi");
-        correlation = config.getInt("model.vote.correlation");
+        alpha = config.getDouble("model.vote.alpha");
+        beta = config.getDouble("model.vote.beta");
+        qi = config.getDouble("model.vote.qi");
+        correlation = config.getDouble("model.vote.correlation");
     }
 
     @Override
@@ -53,7 +53,7 @@ public class BuildVoteMatrix implements Callable<NodeContainer<VoteNode>> {
             while (users_keysB.hasNext()) {
                 long userB = users_keysB.next();
                 UserNode nodeB = users.get(userB);
-                if (evaluateSimilarity(nodeA, nodeB) >= correlation) {
+                if (nodeA.getId()==nodeB.getId()||evaluateSimilarity(nodeA, nodeB) >= correlation) {
                     node.addParent(nodeB);
                 }
             }
@@ -77,11 +77,11 @@ public class BuildVoteMatrix implements Callable<NodeContainer<VoteNode>> {
             sumBottomLeft += countPower((double) a.getRating(itemJ) - a.getMeanRating());
             sumBottomRight += countPower((double) b.getRating(itemJ) - b.getMeanRating());
         }
-        return sumTop / Math.sqrt(sumBottomLeft * sumBottomRight);
+        return Math.abs(sumTop / (Math.sqrt(sumBottomLeft) * Math.sqrt(sumBottomRight)));
     }
 
     protected double countPower(double num) {
-        return num + num;
+        return num * num;
     }
 
     protected LongObjectMap<ItemNode> getParentIntersection(UserNode a, UserNode b) {
