@@ -34,17 +34,17 @@ public abstract class Node<ParentNodeType extends Node,ChildrenNodeType extends 
         return children;
     }
 
-    protected double getProb(long id,int val,LongObjectMap<Integer> cond){
+    public double getCondProbability(int val, LongObjectMap<Integer> parentValuesCond){
         double result=0;
-        Iterator<Long> iterator=cond.keySetIterator();
+        Iterator<Long> iterator=getParents().keySetIterator();
         while (iterator.hasNext()){
-            long idA=iterator.next();
-            result+=weight(idA,cond.get(idA),id,val);
+            long parentId=iterator.next();
+            result+=weight(parentId,parentValuesCond.get(parentId),val);
         }
         return result;
     }
 
-    abstract protected double weight(long idA,int valA,long idB,int valB);
+    abstract protected double weight(long parentId,int parentVal,int myVal);
 
     @Override
     public String toString() {

@@ -13,9 +13,9 @@ public class FeatureNode extends Node<Node,ItemNode> {
         this.name = name;
     }
 
-    protected double getProb(long id,int val,LongObjectMap<Integer> cond){
+    public double getCondProb(int val, LongObjectMap<Integer> parentValuesCond){
         if(val==0){
-            return 1-getProb(id, 1, cond);
+            return 1- getCondProb(1, parentValuesCond);
         }
         if(val==1){
             return children.size()/container.getLower().size();
@@ -24,9 +24,7 @@ public class FeatureNode extends Node<Node,ItemNode> {
     }
 
     @Override
-    protected double weight(long idA, int valA, long idB, int valB) {
-        return 0;
-    }
+    protected double weight(long parentId,int parentVal,int myVal){return 0;}
 
     @Override
     public String toString() {

@@ -23,7 +23,7 @@ public class BuildVoteMatrix implements Callable<NodeContainer<VoteNode>> {
     double correlation;
     double alpha;
     double beta;
-    double qi;
+    double qs;
     private static final Logger log = LoggerFactory.getLogger(BuildVoteMatrix.class);
 
     public BuildVoteMatrix(NodeContainer<UserNode> users) {
@@ -31,7 +31,7 @@ public class BuildVoteMatrix implements Callable<NodeContainer<VoteNode>> {
         Config config = ConfigUtils.getDefaultConfig();
         alpha = config.getDouble("model.vote.alpha");
         beta = config.getDouble("model.vote.beta");
-        qi = config.getDouble("model.vote.qi");
+        qs = config.getDouble("model.vote.qs");
         correlation = config.getDouble("model.vote.correlation");
     }
 
@@ -41,7 +41,7 @@ public class BuildVoteMatrix implements Callable<NodeContainer<VoteNode>> {
         HashMap<String,Double> storage=new HashMap<String, Double>();
         storage.put("alpha",alpha);
         storage.put("beta",beta);
-        storage.put("qi",qi);
+        storage.put("qs", qs);
         NodeContainer<VoteNode> nodes = new NodeContainer<VoteNode>(users,storage);
         Iterator<Long> users_keys = users.keySetIterator();
         while (users_keys.hasNext()) {

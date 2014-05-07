@@ -19,7 +19,10 @@ public class UserNode extends Node<ItemNode,VoteNode> {
     }
 
     public int getRating(long itemId){
-        return ratings.get(itemId);
+        if(ratings.containsKey(itemId)) {
+            return ratings.get(itemId);
+        }
+        return 0;
     }
 
     public double getMeanRating(){
@@ -27,16 +30,16 @@ public class UserNode extends Node<ItemNode,VoteNode> {
     }
 
     @Override
-    protected double weight(long idA, int valA, long idB, int valB) {
-        switch (valA){
+    protected double weight(long parentId, int parentVal, int myVal) {
+        switch (parentVal){
             case 0:
-                if(valB==0){
-                    return 1/container.size();
+                if(myVal==0){
+                    return 1/parents.size();
                 }
                 return 0;
             case 1:
-                if(valB==ratings.get(idB)){
-                    return 1/container.size();
+                if(myVal==ratings.get(parentId)){
+                    return 1/parents.size();
                 }
                 return 0;
             default:
