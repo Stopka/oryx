@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.concurrent.Callable;
 
@@ -34,11 +35,11 @@ public class BuildUserMatrix implements Callable<NodeContainer<UserNode>> {
         this.items = items;
         this.inputDir = inputDir;
         Config config = ConfigUtils.getDefaultConfig();
-        featureFileTag = config.getString("model.feature-file-tag");
-        item_col = config.getInt("model.users-item-col");
-        user_col = config.getInt("model.users-user-col");
-        value_col = config.getInt("model.users-rating-col");
-        max_value = config.getInt("model.users-rating-max");
+        featureFileTag = config.getString("model.item.file-tag");
+        item_col = config.getInt("model.user.item-col");
+        user_col = config.getInt("model.user.user-col");
+        value_col = config.getInt("model.user.rating-col");
+        max_value = config.getInt("model.user.rating-max");
     }
 
     @Override
@@ -49,7 +50,9 @@ public class BuildUserMatrix implements Callable<NodeContainer<UserNode>> {
             log.info("  no input files in {}", inputDir);
             return null;
         }
-        NodeContainer<UserNode> nodes = new NodeContainer<UserNode>(items);
+        HashMap<String,Double> storage=new HashMap<String, Double>();
+        storage.put("maxValue",(double)max_value);
+        NodeContainer<UserNode> nodes = new NodeContainer<UserNode>(items,storage);
         for (File inputFile : inputFiles) {
             log.info("  reading {}", inputFile);
             for (CharSequence line : new FileLineIterable(inputFile)) {
@@ -61,12 +64,13 @@ public class BuildUserMatrix implements Callable<NodeContainer<UserNode>> {
                 if (nodes.containsKey(user)) {
                     node = nodes.get(user);
                 } else {
-                    node = new UserNode(user, max_value);
+                    node = new UserNode(user);
                     nodes.put(node);
                 }
                 node.addParent(items.get(item), value);
             }
         }
+        log.info("  result: {} nodes", nodes.size());
         return nodes;
     }
 

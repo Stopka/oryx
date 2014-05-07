@@ -47,6 +47,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.io.Files;
 import com.typesafe.config.Config;
+import cz.skorpils.oryx.bn.serving.BNServingInitListener;
 import org.apache.catalina.Context;
 import org.apache.catalina.Engine;
 import org.apache.catalina.Host;
@@ -106,7 +107,8 @@ public final class Runner implements Callable<Object>, Closeable {
       ImmutableMap.of(
           "als", ALSServingInitListener.class,
           "kmeans", KMeansServingInitListener.class,
-          "rdf", RDFServingInitListener.class
+          "rdf", RDFServingInitListener.class,
+          "bn", BNServingInitListener.class
       );
 
   private static final int[] ERROR_PAGE_STATUSES = {

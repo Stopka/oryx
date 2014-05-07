@@ -35,6 +35,8 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.typesafe.config.Config;
+import cz.skorpils.oryx.bn.computation.BNDistributedGenerationRunner;
+import cz.skorpils.oryx.bn.computation.local.BNLocalGenerationRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -76,7 +78,10 @@ public final class PeriodicRunner implements Runnable, Closeable {
     List<Class<? extends GenerationRunner>> rdfRunners = Lists.newArrayListWithCapacity(2);
     rdfRunners.add(RDFLocalGenerationRunner.class);
     rdfRunners.add(RDFDistributedGenerationRunner.class);
-    RUNNERS = ImmutableMap.of("als", alsRunners, "kmeans", kmeansRunners, "rdf", rdfRunners);
+      List<Class<? extends GenerationRunner>> bnRunners = Lists.newArrayListWithCapacity(2);
+      bnRunners.add(BNLocalGenerationRunner.class);
+      bnRunners.add(BNDistributedGenerationRunner.class);
+    RUNNERS = ImmutableMap.of("als", alsRunners, "kmeans", kmeansRunners, "rdf", rdfRunners,"bn", bnRunners);
   }
 
   private static final long CHECK_INTERVAL_MINS = 1;

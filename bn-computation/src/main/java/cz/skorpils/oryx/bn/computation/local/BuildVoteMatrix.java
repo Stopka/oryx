@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.concurrent.Callable;
 
@@ -19,19 +20,29 @@ import java.util.concurrent.Callable;
  */
 public class BuildVoteMatrix implements Callable<NodeContainer<VoteNode>> {
     NodeContainer<UserNode> users;
-    int coefficient;
+    int correlation;
+    double alpha;
+    double beta;
+    double qi;
     private static final Logger log = LoggerFactory.getLogger(BuildVoteMatrix.class);
 
     public BuildVoteMatrix(NodeContainer<UserNode> users) {
         this.users = users;
         Config config = ConfigUtils.getDefaultConfig();
-        coefficient = config.getInt("model.correlation-coefficient");
+        alpha = config.getInt("model.vote.alpha");
+        beta = config.getInt("model.vote.beta");
+        qi = config.getInt("model.vote.qi");
+        correlation = config.getInt("model.vote.correlation");
     }
 
     @Override
     public NodeContainer<VoteNode> call() throws IOException {
         log.info("Building vote nodes");
-        NodeContainer<VoteNode> nodes = new NodeContainer<VoteNode>(users);
+        HashMap<String,Double> storage=new HashMap<String, Double>();
+        storage.put("alpha",alpha);
+        storage.put("beta",beta);
+        storage.put("qi",qi);
+        NodeContainer<VoteNode> nodes = new NodeContainer<VoteNode>(users,storage);
         Iterator<Long> users_keys = users.keySetIterator();
         while (users_keys.hasNext()) {
             long user = users_keys.next();
@@ -42,11 +53,12 @@ public class BuildVoteMatrix implements Callable<NodeContainer<VoteNode>> {
             while (users_keysB.hasNext()) {
                 long userB = users_keysB.next();
                 UserNode nodeB = users.get(userB);
-                if (evaluateSimilarity(nodeA, nodeB) >= coefficient) {
+                if (evaluateSimilarity(nodeA, nodeB) >= correlation) {
                     node.addParent(nodeB);
                 }
             }
         }
+        log.info("  result: {} nodes", nodes.size());
         return nodes;
     }
 

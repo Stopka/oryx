@@ -13,6 +13,13 @@ public class VoteNode extends Node<UserNode,Node> {
 
     @Override
     protected double weight(long idA, int valA, long idB, int valB) {
+        if(idA==idB&&valB==originalNode.getRating(idB)){
+            if(valA==valB) {
+                return container.getStorageValue("alpha");
+            }
+            return 0;
+        }
         //TODO
+        return (1-container.getStorageValue("alpha"))*-1/((parents.size()-1)*(-1+container.getStorageValue("beta")));
     }
 }

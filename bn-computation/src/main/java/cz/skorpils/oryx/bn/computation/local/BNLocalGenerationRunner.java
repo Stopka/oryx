@@ -15,22 +15,18 @@
 
 package cz.skorpils.oryx.bn.computation.local;
 
-import com.cloudera.oryx.common.collection.LongObjectMap;
 import com.cloudera.oryx.common.io.IOUtils;
 import com.cloudera.oryx.common.servcomp.Namespaces;
 import com.cloudera.oryx.common.servcomp.Store;
 import com.cloudera.oryx.common.settings.ConfigUtils;
 import com.cloudera.oryx.computation.common.JobException;
 import com.cloudera.oryx.computation.common.LocalGenerationRunner;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-
 import com.google.common.io.Files;
 import com.typesafe.config.Config;
 import cz.skorpils.oryx.bn.computation.model.*;
-import cz.skorpils.oryx.bn.computation.model.NamedMatrix;
+
+import java.io.File;
+import java.io.IOException;
 
 public final class BNLocalGenerationRunner extends LocalGenerationRunner {
 
@@ -68,7 +64,7 @@ public final class BNLocalGenerationRunner extends LocalGenerationRunner {
             NodeContainer<ItemNode> items = new BuildItemMatrix(features, currentInboundDir).call();
             NodeContainer<UserNode> users = new BuildUserMatrix(items, currentInboundDir).call();
             NodeContainer<VoteNode> votes = new BuildVoteMatrix(users).call();
-
+            /*
             if (RbyRow.isEmpty() || RbyColumn.isEmpty()) {
                 return;
             }
@@ -90,7 +86,7 @@ public final class BNLocalGenerationRunner extends LocalGenerationRunner {
             }
 
             store.uploadDirectory(generationPrefix, tempOutDir, false);
-
+            */
         } finally {
             IOUtils.deleteRecursively(currentInboundDir);
             IOUtils.deleteRecursively(tempOutDir);

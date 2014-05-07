@@ -20,7 +20,7 @@ public class BuildFeatureMatrix implements Callable<NodeContainer<FeatureNode>> 
 
     public BuildFeatureMatrix(){
         Config config = ConfigUtils.getDefaultConfig();
-        featureNames=(String[])config.getStringList("model.items-feature-names").toArray();
+        featureNames=(String[])config.getStringList("model.item.feature.names").toArray(new String[0]);
     }
 
     @Override
@@ -33,6 +33,7 @@ public class BuildFeatureMatrix implements Callable<NodeContainer<FeatureNode>> 
             nodes.put(node);
             i++;
         }
+        log.info("  result: {} nodes", nodes.size());
         return nodes;
     }
 }

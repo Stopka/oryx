@@ -34,11 +34,11 @@ public class BuildItemMatrix implements Callable<NodeContainer<ItemNode>> {
         this.features = features;
         this.inputDir = inputDir;
         Config config = ConfigUtils.getDefaultConfig();
-        featureFileTag = config.getString("model.items-tag");
-        featureColumns = (Integer[]) config.getIntList("model.items-feature-cols").toArray();
-        featureNames = (String[]) config.getStringList("model.items-feature-names").toArray();
-        name_col = config.getInt("model.items-name-col");
-        id_col = config.getInt("model.items-id-col");
+        featureFileTag = config.getString("model.item.file-tag");
+        featureColumns = (Integer[]) config.getIntList("model.item.feature.cols").toArray(new Integer[0]);
+        featureNames = (String[]) config.getStringList("model.item.feature.names").toArray(new String[0]);
+        name_col = config.getInt("model.item.name-col");
+        id_col = config.getInt("model.item.id-col");
     }
 
     @Override
@@ -64,6 +64,7 @@ public class BuildItemMatrix implements Callable<NodeContainer<ItemNode>> {
                 nodes.put(node);
             }
         }
+        log.info("  result: {} nodes", nodes.size());
         return nodes;
     }
 

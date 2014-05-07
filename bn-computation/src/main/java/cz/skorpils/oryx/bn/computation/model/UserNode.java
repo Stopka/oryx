@@ -7,11 +7,9 @@ import com.cloudera.oryx.common.collection.LongObjectMap;
  */
 public class UserNode extends Node<ItemNode,VoteNode> {
     LongObjectMap<Integer> ratings = new LongObjectMap<Integer>();
-    int maxValue;
     int ratingSum=0;
-    public UserNode(long id,int maxValue){
+    public UserNode(long id){
         super(id);
-        this.maxValue = maxValue;
     }
 
     public void addParent(ItemNode userNode, int rating) {
