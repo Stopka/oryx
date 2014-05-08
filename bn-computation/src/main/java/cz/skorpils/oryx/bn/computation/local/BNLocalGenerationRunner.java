@@ -23,7 +23,7 @@ import com.cloudera.oryx.computation.common.JobException;
 import com.cloudera.oryx.computation.common.LocalGenerationRunner;
 import com.google.common.io.Files;
 import com.typesafe.config.Config;
-import cz.skorpils.oryx.bn.computation.model.*;
+import cz.skorpils.oryx.bn.common.model.*;
 
 import java.io.File;
 import java.io.IOException;

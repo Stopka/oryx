@@ -1,10 +1,9 @@
 package cz.skorpils.oryx.bn.computation.local;
 
-import com.cloudera.oryx.common.collection.LongObjectMap;
 import com.cloudera.oryx.common.settings.ConfigUtils;
 import com.typesafe.config.Config;
-import cz.skorpils.oryx.bn.computation.model.FeatureNode;
-import cz.skorpils.oryx.bn.computation.model.NodeContainer;
+import cz.skorpils.oryx.bn.common.model.FeatureNode;
+import cz.skorpils.oryx.bn.common.model.NodeContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

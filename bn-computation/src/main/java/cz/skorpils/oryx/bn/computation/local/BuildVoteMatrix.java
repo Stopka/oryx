@@ -3,10 +3,10 @@ package cz.skorpils.oryx.bn.computation.local;
 import com.cloudera.oryx.common.collection.LongObjectMap;
 import com.cloudera.oryx.common.settings.ConfigUtils;
 import com.typesafe.config.Config;
-import cz.skorpils.oryx.bn.computation.model.ItemNode;
-import cz.skorpils.oryx.bn.computation.model.NodeContainer;
-import cz.skorpils.oryx.bn.computation.model.UserNode;
-import cz.skorpils.oryx.bn.computation.model.VoteNode;
+import cz.skorpils.oryx.bn.common.model.ItemNode;
+import cz.skorpils.oryx.bn.common.model.NodeContainer;
+import cz.skorpils.oryx.bn.common.model.UserNode;
+import cz.skorpils.oryx.bn.common.model.VoteNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

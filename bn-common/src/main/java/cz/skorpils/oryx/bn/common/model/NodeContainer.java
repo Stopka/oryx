@@ -1,4 +1,4 @@
-package cz.skorpils.oryx.bn.computation.model;
+package cz.skorpils.oryx.bn.common.model;
 
 import com.cloudera.oryx.common.collection.LongObjectMap;
 
