@@ -49,9 +49,7 @@ public class BuildUserMatrix implements Callable<NodeContainer<UserNode>> {
             log.info("  no input files in {}", inputDir);
             return null;
         }
-        HashMap<String,Double> storage=new HashMap<String, Double>();
-        storage.put("maxValue",(double)max_value);
-        NodeContainer<UserNode> nodes = new NodeContainer<UserNode>(items,storage);
+        NodeContainer<UserNode> nodes = new NodeContainer<UserNode>(items,max_value);
         for (File inputFile : inputFiles) {
             log.info("  reading {}", inputFile);
             for (CharSequence line : new FileLineIterable(inputFile)) {

@@ -42,7 +42,7 @@ public class BuildVoteMatrix implements Callable<NodeContainer<VoteNode>> {
         storage.put("alpha",alpha);
         storage.put("beta",beta);
         storage.put("qs", qs);
-        NodeContainer<VoteNode> nodes = new NodeContainer<VoteNode>(users,storage);
+        NodeContainer<VoteNode> nodes = new NodeContainer<VoteNode>(users,users.getMaxValue(),storage);
         Iterator<Long> users_keys = users.keySetIterator();
         while (users_keys.hasNext()) {
             long user = users_keys.next();

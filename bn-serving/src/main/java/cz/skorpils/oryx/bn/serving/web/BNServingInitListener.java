@@ -13,16 +13,13 @@
  * License.
  */
 
-package cz.skorpils.oryx.bn.serving;
+package cz.skorpils.oryx.bn.serving.web;
 
-import com.cloudera.oryx.common.settings.ConfigUtils;
 import com.cloudera.oryx.serving.web.AbstractOryxServingInitListener;
 import org.apache.catalina.Context;
-import org.apache.catalina.Wrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.http.HttpServlet;
@@ -82,16 +79,9 @@ public final class BNServingInitListener extends AbstractOryxServingInitListener
 
   @Override
   public void addServlets(Context context) {
-    /*addServlet(context, new RecommendServlet(), "/recommend/*");
-    addServlet(context, new RecommendToManyServlet(), "/recommendToMany/*");
-    addServlet(context, new RecommendToAnonymousServlet(), "/recommendToAnonymous/*");
-    addServlet(context, new SimilarityServlet(), "/similarity/*");
-    addServlet(context, new SimilarityToItemServlet(), "/similarityToItem/*");
     addServlet(context, new EstimateServlet(), "/estimate/*");
-    addServlet(context, new EstimateForAnonymousServlet(), "/estimateForAnonymous/*");
-    addServlet(context, new BecauseServlet(), "/because/*");
-    addServlet(context, new ReadyServlet(), "/ready/*");
-    addServlet(context, new MostPopularItemsServlet(), "/mostPopularItems/*");
+    /*
+      addServlet(context, new MostPopularItemsServlet(), "/mostPopularItems/*");
     if (!ConfigUtils.getDefaultConfig().getBoolean("serving-layer.api.read-only")) {
       addServlet(context, new PreferenceServlet(), "/pref/*");
       Wrapper ingestWrapper = addServlet(context, new IngestServlet(), "/ingest/*");

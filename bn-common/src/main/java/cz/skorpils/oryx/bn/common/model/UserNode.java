@@ -48,6 +48,11 @@ public class UserNode extends Node<ItemNode,VoteNode> {
     }
 
     @Override
+    protected boolean isLayer(String layer) {
+        return layer.equals("user");
+    }
+
+    @Override
     public String toString() {
         return "U"+super.toString()+" "+ratings.toString();
     }

@@ -43,6 +43,11 @@ public class ItemNode extends Node<FeatureNode,UserNode> {
     }
 
     @Override
+    protected boolean isLayer(String layer) {
+        return layer.equals("item");
+    }
+
+    @Override
     public String toString() {
         return "I"+super.toString()+" "+name;
     }

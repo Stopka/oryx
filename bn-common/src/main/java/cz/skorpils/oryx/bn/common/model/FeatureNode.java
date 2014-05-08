@@ -27,6 +27,11 @@ public class FeatureNode extends Node<Node,ItemNode> {
     protected double weight(long parentId,int parentVal,int myVal){return 0;}
 
     @Override
+    protected boolean isLayer(String layer) {
+        return layer.equals("feature");
+    }
+
+    @Override
     public String toString() {
         return "F"+super.toString()+" "+name;
     }

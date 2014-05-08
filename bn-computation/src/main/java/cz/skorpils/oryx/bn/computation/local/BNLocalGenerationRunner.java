@@ -60,10 +60,7 @@ public final class BNLocalGenerationRunner extends LocalGenerationRunner {
 
             Config config = ConfigUtils.getDefaultConfig();
 
-            NodeContainer<FeatureNode> features = new BuildFeatureMatrix().call();
-            NodeContainer<ItemNode> items = new BuildItemMatrix(features, currentInboundDir).call();
-            NodeContainer<UserNode> users = new BuildUserMatrix(items, currentInboundDir).call();
-            NodeContainer<VoteNode> votes = new BuildVoteMatrix(users).call();
+            BayesNetwork bayesNetwork = new BuildMatrix(currentInboundDir).call();
             System.out.println("Done");
             /*
             if (RbyRow.isEmpty() || RbyColumn.isEmpty()) {

@@ -47,7 +47,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.io.Files;
 import com.typesafe.config.Config;
-import cz.skorpils.oryx.bn.serving.BNServingInitListener;
+import cz.skorpils.oryx.bn.serving.web.BNServingInitListener;
 import org.apache.catalina.Context;
 import org.apache.catalina.Engine;
 import org.apache.catalina.Host;

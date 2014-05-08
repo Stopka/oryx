@@ -13,18 +13,24 @@ public class NodeContainer<NodeType extends Node> {
     LongObjectMap<NodeType> nodes=new LongObjectMap<NodeType>();
     NodeContainer upper;
     NodeContainer lower;
+    int maxValue;
     Map<String,Double> storage=new HashMap<String, Double>();
 
-    public NodeContainer(NodeContainer upper,Map<String,Double> storage){
-        this(upper);
+    public NodeContainer(NodeContainer upper,int maxValue,Map<String,Double> storage){
+        this(upper,maxValue);
         this.storage=storage;
     }
 
-    public NodeContainer(NodeContainer upper){
+    public NodeContainer(NodeContainer upper,int maxValue){
+        this.maxValue=maxValue;
         this.upper=upper;
         if(upper!=null) {
             upper.lower = this;
         }
+    }
+
+    public NodeContainer(NodeContainer upper){
+        this(upper,2);
     }
 
     public NodeContainer(){
@@ -71,5 +77,13 @@ public class NodeContainer<NodeType extends Node> {
     @Override
     public String toString() {
         return "Container"+nodes.toString()+storage.toString();
+    }
+
+    public double getCondProbability(long id,int val, Evidence evidence){
+        return nodes.get(id).getCondProbability(val,evidence);
+    }
+
+    public int getMaxValue() {
+        return maxValue;
     }
 }
