@@ -14,11 +14,28 @@ public class Evidence {
         this.layer=layer;
     }
 
-    public LongObjectMap<Integer> getValues(){
-        return values;
+    public Evidence(String layer){
+        this(layer, new LongObjectMap<Integer>());
     }
 
-    public boolean isForMe(Node node){
-        return node.isLayer(layer);
+    public Evidence addValue(long id,int value){
+        this.values.put(id,value);
+        return this;
+    }
+
+    public int get(long id){
+        if(!values.containsKey(id)){
+            return 0;
+        }
+        return values.get(id);
+    }
+
+    public boolean isForNode(Node node){
+        return node.isParentLayer(layer);
+    }
+
+    @Override
+    public String toString() {
+        return "Evidence "+layer+values.toString();
     }
 }

@@ -1,7 +1,5 @@
 package cz.skorpils.oryx.bn.common.model;
 
-import com.cloudera.oryx.common.collection.LongObjectMap;
-
 import java.util.Iterator;
 
 /**
@@ -16,12 +14,12 @@ public class ItemNode extends Node<FeatureNode,UserNode> {
     }
 
     @Override
-    public double getCondProbability(int val, LongObjectMap<Integer> parentValuesCond){
+    public double getNodeCondProbability(int val, Evidence parentValuesCond){
         if(val==0){
-            return 1-super.getCondProbability(1, parentValuesCond);
+            return 1-super.getNodeCondProbability(1, parentValuesCond);
         }
         if(val==1){
-            return super.getCondProbability(val, parentValuesCond);
+            return super.getNodeCondProbability(val, parentValuesCond);
         }
         return 0;
     }
@@ -31,13 +29,13 @@ public class ItemNode extends Node<FeatureNode,UserNode> {
         if(parentVal==0){
             return 0;
         }
-        double top=Math.log(1/parents.get(parentId).getCondProb(parentVal,null)+1);
+        double top=Math.log(1/parents.get(parentId).getNodeCondProbability(parentVal, null)+1);
         double bottomLeft=Math.log(container.size()+1);
         double bottomRight=0;
         Iterator<Long> it=parents.keySetIterator();
         while (it.hasNext()){
             long id=it.next();
-            bottomRight+=Math.log((1/parents.get(id).getCondProb(1, null))+1)/Math.log(container.size()+1);
+            bottomRight+=Math.log((1/parents.get(id).getNodeCondProbability(1, null))+1)/Math.log(container.size()+1);
         }
         return top/(bottomLeft*bottomRight);
     }
@@ -45,6 +43,11 @@ public class ItemNode extends Node<FeatureNode,UserNode> {
     @Override
     protected boolean isLayer(String layer) {
         return layer.equals("item");
+    }
+
+    @Override
+    protected boolean isParentLayer(String layer) {
+        return layer.equals("feature");
     }
 
     @Override

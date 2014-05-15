@@ -94,6 +94,11 @@ public class VoteNode extends Node<UserNode,Node> {
     }
 
     @Override
+    protected boolean isParentLayer(String layer) {
+        return layer.equals("user");
+    }
+
+    @Override
     public String toString() {
         return "V"+super.toString()+" "+originalNode.ratings.toString();
     }

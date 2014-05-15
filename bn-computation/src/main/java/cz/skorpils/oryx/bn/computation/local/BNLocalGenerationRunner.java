@@ -61,6 +61,7 @@ public final class BNLocalGenerationRunner extends LocalGenerationRunner {
             Config config = ConfigUtils.getDefaultConfig();
 
             BayesNetwork bayesNetwork = new BuildMatrix(currentInboundDir).call();
+            double result=bayesNetwork.getCondProbability("vote",2,2,new Evidence("item").addValue(1,1));
             System.out.println("Done");
             /*
             if (RbyRow.isEmpty() || RbyColumn.isEmpty()) {

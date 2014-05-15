@@ -9,7 +9,7 @@ import java.util.Iterator;
  */
 public abstract class Node<ParentNodeType extends Node,ChildrenNodeType extends Node> {
     LongObjectMap<ParentNodeType> parents = new LongObjectMap<ParentNodeType>();
-    LongObjectMap<ParentNodeType> children = new LongObjectMap<ParentNodeType>();
+    LongObjectMap<ChildrenNodeType> children = new LongObjectMap<ChildrenNodeType>();
     NodeContainer<?> container=null;
     long id;
 
@@ -30,11 +30,11 @@ public abstract class Node<ParentNodeType extends Node,ChildrenNodeType extends 
         return parents;
     }
 
-    public LongObjectMap<ParentNodeType> getChildren() {
+    public LongObjectMap<ChildrenNodeType> getChildren() {
         return children;
     }
 
-    public double getCondProbability(int val, LongObjectMap<Integer> parentValuesCond){
+    public double getNodeCondProbability(int val, Evidence parentValuesCond){
         double result=0;
         Iterator<Long> iterator=getParents().keySetIterator();
         while (iterator.hasNext()){
@@ -45,13 +45,16 @@ public abstract class Node<ParentNodeType extends Node,ChildrenNodeType extends 
     }
 
     public double getCondProbability(int val, Evidence evidence){
-        //TODO
+        if(evidence.isForNode(this)){
+            return getNodeCondProbability(val,evidence);
+        }
         double result=0;
         Iterator<Long> iterator=getParents().keySetIterator();
         while (iterator.hasNext()){
             long parentId=iterator.next();
             for(int parentVal=0;parentVal<container.upper.getMaxValue();parentVal++) {
-                result += weight(parentId, parentVal, val)*getParents().get(parentId).getCondProbability(parentVal,evidence);
+                ParentNodeType parentNode=getParents().get(parentId);
+                result += weight(parentId, parentVal, val)*parentNode.getCondProbability(parentVal,evidence);
             }
         }
         return result;
@@ -60,6 +63,8 @@ public abstract class Node<ParentNodeType extends Node,ChildrenNodeType extends 
     abstract protected double weight(long parentId,int parentVal,int myVal);
 
     abstract protected boolean isLayer(String layer);
+
+    abstract protected boolean isParentLayer(String layer);
 
     @Override
     public String toString() {

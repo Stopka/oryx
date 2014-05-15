@@ -53,6 +53,11 @@ public class UserNode extends Node<ItemNode,VoteNode> {
     }
 
     @Override
+    protected boolean isParentLayer(String layer) {
+        return layer.equals("item");
+    }
+
+    @Override
     public String toString() {
         return "U"+super.toString()+" "+ratings.toString();
     }

@@ -1,7 +1,5 @@
 package cz.skorpils.oryx.bn.common.model;
 
-import com.cloudera.oryx.common.collection.LongObjectMap;
-
 /**
  * Created by stopka on 6.5.14.
  */
@@ -13,9 +11,10 @@ public class FeatureNode extends Node<Node,ItemNode> {
         this.name = name;
     }
 
-    public double getCondProb(int val, LongObjectMap<Integer> parentValuesCond){
+    @Override
+    public double getNodeCondProbability(int val, Evidence parentValuesCond){
         if(val==0){
-            return 1- getCondProb(1, parentValuesCond);
+            return 1- getNodeCondProbability(1, parentValuesCond);
         }
         if(val==1){
             return children.size()/container.getLower().size();
@@ -29,6 +28,11 @@ public class FeatureNode extends Node<Node,ItemNode> {
     @Override
     protected boolean isLayer(String layer) {
         return layer.equals("feature");
+    }
+
+    @Override
+    protected boolean isParentLayer(String layer) {
+        return false;
     }
 
     @Override
