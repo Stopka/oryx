@@ -34,16 +34,16 @@ public class UserNode extends Node<ItemNode,VoteNode> {
         switch (parentVal){
             case 0:
                 if(myVal==0){
-                    return 1/parents.size();
+                    return 1d/(double)parents.size();
                 }
-                return 0;
+                return 0d;
             case 1:
                 if(myVal==ratings.get(parentId)){
-                    return 1/parents.size();
+                    return 1d/(double)parents.size();
                 }
-                return 0;
+                return 0d;
             default:
-                return 0;
+                return 0d;
         }
     }
 

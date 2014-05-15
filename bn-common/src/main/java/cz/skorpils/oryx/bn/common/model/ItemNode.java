@@ -16,7 +16,7 @@ public class ItemNode extends Node<FeatureNode,UserNode> {
     @Override
     public double getNodeCondProbability(int val, Evidence parentValuesCond){
         if(val==0){
-            return 1-super.getNodeCondProbability(1, parentValuesCond);
+            return 1d-super.getNodeCondProbability(1, parentValuesCond);
         }
         if(val==1){
             return super.getNodeCondProbability(val, parentValuesCond);
@@ -29,13 +29,13 @@ public class ItemNode extends Node<FeatureNode,UserNode> {
         if(parentVal==0){
             return 0;
         }
-        double top=Math.log(1/parents.get(parentId).getNodeCondProbability(parentVal, null)+1);
-        double bottomLeft=Math.log(container.size()+1);
-        double bottomRight=0;
+        double top=Math.log(1d/(double)parents.get(parentId).getNodeCondProbability(parentVal, null)+1);
+        double bottomLeft=Math.log((double)container.size()+1d);
+        double bottomRight=0d;
         Iterator<Long> it=parents.keySetIterator();
         while (it.hasNext()){
             long id=it.next();
-            bottomRight+=Math.log((1/parents.get(id).getNodeCondProbability(1, null))+1)/Math.log(container.size()+1);
+            bottomRight+=Math.log((1d/parents.get(id).getNodeCondProbability(1, null))+1)/Math.log((double)container.size()+1d);
         }
         return top/(bottomLeft*bottomRight);
     }

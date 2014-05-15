@@ -14,16 +14,16 @@ public class FeatureNode extends Node<Node,ItemNode> {
     @Override
     public double getNodeCondProbability(int val, Evidence parentValuesCond){
         if(val==0){
-            return 1- getNodeCondProbability(1, parentValuesCond);
+            return 1d- getNodeCondProbability(1, parentValuesCond);
         }
         if(val==1){
-            return children.size()/container.getLower().size();
+            return (double)children.size()/(double)container.getLower().size();
         }
-        return 0;
+        return 0d;
     }
 
     @Override
-    protected double weight(long parentId,int parentVal,int myVal){return 0;}
+    protected double weight(long parentId,int parentVal,int myVal){return 0d;}
 
     @Override
     protected boolean isLayer(String layer) {

@@ -27,9 +27,9 @@ public class VoteNode extends Node<UserNode,Node> {
         double beta=container.getStorageValue("beta");
         double qs=container.getStorageValue("qs");
         LongObjectMap<ItemNode> unification=getParentUnification(getParents().get(parentId),originalNode);
-        double topLeft=1-alpha;
+        double topLeft=1d-alpha;
         double topRight=n(parentId,parentVal,myVal,unification)+beta*qs;
-        double bottomLeft=parents.size()-1;
+        double bottomLeft=(double)parents.size()-1d;
         double bottomRight=n(parentId,parentVal,unification)+beta;
         return (topLeft*topRight)/(bottomLeft*bottomRight);
     }
@@ -41,12 +41,12 @@ public class VoteNode extends Node<UserNode,Node> {
      * @return number of items from parent.getParents+this.getParents voted with parentVal by parent and myVal by Ua=this user
      */
     private double n(long parentId, int parentVal, int myVal,LongObjectMap<ItemNode> unification){
-        double result=0;
+        double result=0d;
         Iterator<Long> it=unification.keySetIterator();
         while (it.hasNext()){
             long item=it.next();
             if(originalNode.getRating(item)==myVal&&getParents().get(parentId).getRating(item)==parentVal){
-                result+=1;
+                result+=1d;
             }
         }
         return result;
@@ -58,12 +58,12 @@ public class VoteNode extends Node<UserNode,Node> {
      * @return number of items from parent.getParents+this.getParents voted with parentVal by parent
      */
     private double n(long parentId, int parentVal, LongObjectMap<ItemNode> unification){
-        double result=0;
+        double result=0d;
         Iterator<Long> it=unification.keySetIterator();
         while (it.hasNext()){
             long item=it.next();
             if(getParents().get(parentId).getRating(item)==parentVal){
-                result+=1;
+                result+=1d;
             }
         }
         return result;

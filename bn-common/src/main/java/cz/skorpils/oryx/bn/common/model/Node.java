@@ -35,7 +35,7 @@ public abstract class Node<ParentNodeType extends Node,ChildrenNodeType extends 
     }
 
     public double getNodeCondProbability(int val, Evidence parentValuesCond){
-        double result=0;
+        double result=0d;
         Iterator<Long> iterator=getParents().keySetIterator();
         while (iterator.hasNext()){
             long parentId=iterator.next();
@@ -48,7 +48,7 @@ public abstract class Node<ParentNodeType extends Node,ChildrenNodeType extends 
         if(evidence.isForNode(this)){
             return getNodeCondProbability(val,evidence);
         }
-        double result=0;
+        double result=0d;
         Iterator<Long> iterator=getParents().keySetIterator();
         while (iterator.hasNext()){
             long parentId=iterator.next();
