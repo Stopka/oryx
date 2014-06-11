@@ -42,12 +42,12 @@ public class ItemNode extends Node<FeatureNode,UserNode> {
 
     @Override
     protected boolean isLayer(String layer) {
-        return layer.equals("item");
+        return layer.equals(Layer.ITEM);
     }
 
     @Override
     protected boolean isParentLayer(String layer) {
-        return layer.equals("feature");
+        return layer.equals(Layer.FEATURE);
     }
 
     @Override

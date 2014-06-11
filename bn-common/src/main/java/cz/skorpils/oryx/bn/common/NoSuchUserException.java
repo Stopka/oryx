@@ -16,7 +16,7 @@
 package cz.skorpils.oryx.bn.common;
 
 /**
- * Thrown when a method in classes like {@link OryxRecommender} can't complete because it is trying
+ * Thrown when a method in classes like {@link cz.skorpils.oryx.bn.common.recomender.OryxRecommender} can't complete because it is trying
  * to operate on a user whose ID is not known.
  *
  * @author Sean Owen

@@ -17,7 +17,7 @@ package cz.skorpils.oryx.bn.common.rescorer;
 
 import com.cloudera.oryx.common.ClassUtils;
 import com.google.common.collect.Lists;
-import cz.skorpils.oryx.bn.common.OryxRecommender;
+import cz.skorpils.oryx.bn.common.recomender.OryxRecommender;
 
 import java.util.List;
 

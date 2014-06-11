@@ -90,12 +90,12 @@ public class VoteNode extends Node<UserNode,Node> {
 
     @Override
     protected boolean isLayer(String layer) {
-        return layer.equals("vote");
+        return layer.equals(Layer.VOTE);
     }
 
     @Override
     protected boolean isParentLayer(String layer) {
-        return layer.equals("user");
+        return layer.equals(Layer.USER);
     }
 
     @Override

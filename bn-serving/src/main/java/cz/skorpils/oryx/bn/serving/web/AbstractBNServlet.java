@@ -18,7 +18,7 @@ package cz.skorpils.oryx.bn.serving.web;
 import com.cloudera.oryx.common.io.DelimitedDataUtils;
 import com.cloudera.oryx.serving.web.AbstractOryxServlet;
 import com.google.common.base.Preconditions;
-import cz.skorpils.oryx.bn.common.OryxRecommender;
+import cz.skorpils.oryx.bn.common.recomender.OryxRecommender;
 import cz.skorpils.oryx.bn.common.rescorer.RescorerProvider;
 
 import javax.servlet.*;

@@ -27,7 +27,7 @@ public class FeatureNode extends Node<Node,ItemNode> {
 
     @Override
     protected boolean isLayer(String layer) {
-        return layer.equals("feature");
+        return layer.equals(Layer.FEATURE);
     }
 
     @Override

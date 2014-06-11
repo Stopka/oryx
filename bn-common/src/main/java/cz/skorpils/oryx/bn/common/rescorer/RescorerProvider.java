@@ -15,7 +15,7 @@
 
 package cz.skorpils.oryx.bn.common.rescorer;
 
-import cz.skorpils.oryx.bn.common.OryxRecommender;
+import cz.skorpils.oryx.bn.common.recomender.OryxRecommender;
 
 /**
  * <p>Implementations of this interface provide, optionally, objects that can be used to modify and influence

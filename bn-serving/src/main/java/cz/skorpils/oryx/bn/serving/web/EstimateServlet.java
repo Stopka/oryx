@@ -18,7 +18,7 @@ package cz.skorpils.oryx.bn.serving.web;
 
 import com.google.common.collect.Lists;
 import cz.skorpils.oryx.bn.common.NotReadyException;
-import cz.skorpils.oryx.bn.common.OryxRecommender;
+import cz.skorpils.oryx.bn.common.recomender.OryxRecommender;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -66,13 +66,6 @@ public final class EstimateServlet extends AbstractBNServlet {
     String[] itemIDs = itemIDsList.toArray(new String[itemIDsList.size()]);
     unescapeSlashHack(itemIDs);
 
-    OryxRecommender recommender = getRecommender();
-    try {
-      float[] estimates = recommender.estimatePreferences(userID, itemIDs);
-      output(request, response, estimates);
-    } catch (NotReadyException nre) {
-      response.sendError(HttpServletResponse.SC_SERVICE_UNAVAILABLE, nre.toString());
-    }
   }
 
 }

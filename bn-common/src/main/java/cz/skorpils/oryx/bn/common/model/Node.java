@@ -2,12 +2,13 @@ package cz.skorpils.oryx.bn.common.model;
 
 import com.cloudera.oryx.common.collection.LongObjectMap;
 
+import java.io.Serializable;
 import java.util.Iterator;
 
 /**
  * Created by stopka on 6.5.14.
  */
-public abstract class Node<ParentNodeType extends Node,ChildrenNodeType extends Node> {
+public abstract class Node<ParentNodeType extends Node,ChildrenNodeType extends Node> implements Serializable {
     LongObjectMap<ParentNodeType> parents = new LongObjectMap<ParentNodeType>();
     LongObjectMap<ChildrenNodeType> children = new LongObjectMap<ChildrenNodeType>();
     NodeContainer<?> container=null;

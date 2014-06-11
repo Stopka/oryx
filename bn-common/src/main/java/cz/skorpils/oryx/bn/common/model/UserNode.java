@@ -49,12 +49,12 @@ public class UserNode extends Node<ItemNode,VoteNode> {
 
     @Override
     protected boolean isLayer(String layer) {
-        return layer.equals("user");
+        return layer.equals(Layer.USER);
     }
 
     @Override
     protected boolean isParentLayer(String layer) {
-        return layer.equals("item");
+        return layer.equals(Layer.ITEM);
     }
 
     @Override

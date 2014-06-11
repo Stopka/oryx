@@ -1,7 +1,5 @@
 package cz.skorpils.oryx.bn.computation.local;
 
-import com.cloudera.oryx.common.settings.ConfigUtils;
-import com.typesafe.config.Config;
 import cz.skorpils.oryx.bn.common.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,12 +11,12 @@ import java.util.concurrent.Callable;
 /**
  * Created by stopka on 6.5.14.
  */
-public class BuildMatrix implements Callable<BayesNetwork> {
-    private static final Logger log = LoggerFactory.getLogger(BuildMatrix.class);
+public class BuildModel implements Callable<BayesNetwork> {
+    private static final Logger log = LoggerFactory.getLogger(BuildModel.class);
     File inputDir;
 
 
-    public BuildMatrix(File inputDir){
+    public BuildModel(File inputDir){
         this.inputDir=inputDir;
     }
 

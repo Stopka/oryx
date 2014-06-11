@@ -24,6 +24,7 @@ import com.cloudera.oryx.computation.common.LocalGenerationRunner;
 import com.google.common.io.Files;
 import com.typesafe.config.Config;
 import cz.skorpils.oryx.bn.common.model.*;
+import cz.skorpils.oryx.bn.common.recomender.BNRecommender;
 
 import java.io.File;
 import java.io.IOException;
@@ -60,37 +61,20 @@ public final class BNLocalGenerationRunner extends LocalGenerationRunner {
 
             Config config = ConfigUtils.getDefaultConfig();
 
-            BayesNetwork bayesNetwork = new BuildMatrix(currentInboundDir).call();
-            System.out.println(bayesNetwork.getCondProbability("vote",1,5,new Evidence("item").addValue(6,1)));
+            BayesNetwork bayesNetwork = new BuildModel(currentInboundDir).call();
+            BNRecommender recommender=new BNRecommender(bayesNetwork);
+            recommender.recommend("1",0);
+           /* System.out.println(bayesNetwork.getCondProbability("vote",1,5,new Evidence("item").addValue(6,1)));
             System.out.println(bayesNetwork.getCondProbability("vote",1,4,new Evidence("item").addValue(6,1)));
             System.out.println(bayesNetwork.getCondProbability("vote",1,3,new Evidence("item").addValue(6,1)));
             System.out.println(bayesNetwork.getCondProbability("vote",1,2,new Evidence("item").addValue(6,1)));
             System.out.println(bayesNetwork.getCondProbability("vote",1,1,new Evidence("item").addValue(6,1)));
             System.out.println(bayesNetwork.getCondProbability("vote",1,0,new Evidence("item").addValue(6,1)));
             System.out.println("Done");
-            /*
-            if (RbyRow.isEmpty() || RbyColumn.isEmpty()) {
-                return;
-            }
-
-            MatrixFactorizer als = new FactorMatrix(RbyRow, RbyColumn).call();
-
-            new WriteOutputs(tempOutDir, RbyRow, knownItemIDs, als.getX(), als.getY(), idMapping).call();
-
-            if (config.getDouble("model.test-set-fraction") > 0.0) {
-                new ComputeMAP(currentTestDir, als.getX(), als.getY()).call();
-            }
-
-            if (config.getBoolean("model.recommend.compute")) {
-                new MakeRecommendations(tempOutDir, knownItemIDs, als.getX(), als.getY(), idMapping).call();
-            }
-
-            if (config.getBoolean("model.item-similarity.compute")) {
-                new MakeItemSimilarity(tempOutDir, als.getY(), idMapping).call();
-            }
+*/
+            new WriteOutputs(tempOutDir, bayesNetwork).call();
 
             store.uploadDirectory(generationPrefix, tempOutDir, false);
-            */
         }catch (Exception e){
             System.err.println(e);
         }finally {

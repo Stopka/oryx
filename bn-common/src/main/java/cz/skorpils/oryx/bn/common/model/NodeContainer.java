@@ -2,6 +2,7 @@ package cz.skorpils.oryx.bn.common.model;
 
 import com.cloudera.oryx.common.collection.LongObjectMap;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -9,7 +10,7 @@ import java.util.Map;
 /**
  * Created by stopka on 6.5.14.
  */
-public class NodeContainer<NodeType extends Node> {
+public class NodeContainer<NodeType extends Node> implements Serializable{
     LongObjectMap<NodeType> nodes=new LongObjectMap<NodeType>();
     NodeContainer upper;
     NodeContainer lower;
