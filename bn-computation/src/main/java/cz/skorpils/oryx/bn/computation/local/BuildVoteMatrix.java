@@ -53,7 +53,7 @@ public class BuildVoteMatrix implements Callable<NodeContainer<VoteNode>> {
             while (users_keysB.hasNext()) {
                 long userB = users_keysB.next();
                 UserNode nodeB = users.get(userB);
-                if (nodeA.getId()==nodeB.getId()||evaluateSimilarity(nodeA, nodeB) >= correlation) {
+                if (evaluateSimilarity(nodeA, nodeB) >= correlation) {
                     node.addParent(nodeB);
                 }
             }
@@ -63,21 +63,21 @@ public class BuildVoteMatrix implements Callable<NodeContainer<VoteNode>> {
     }
 
     protected double evaluateSimilarity(UserNode a, UserNode b) {
-        LongObjectMap<ItemNode> itemInIntersection = getParentIntersection(a, b);
-        if (itemInIntersection.isEmpty()) {
+        LongObjectMap<ItemNode> itemIntersection = getParentIntersection(a, b);
+        if (itemIntersection.isEmpty()) {
             return 0;
         }
         double sumTop = 0;
         double sumBottomLeft = 0;
         double sumBottomRight = 0;
-        Iterator<Long> iterator = itemInIntersection.keySetIterator();
+        Iterator<Long> iterator = itemIntersection.keySetIterator();
         while (iterator.hasNext()) {
             long itemJ = iterator.next();
             sumTop += ((double) a.getRating(itemJ) - a.getMeanRating()) * ((double) b.getRating(itemJ) - b.getMeanRating());
             sumBottomLeft += countPower((double) a.getRating(itemJ) - a.getMeanRating());
             sumBottomRight += countPower((double) b.getRating(itemJ) - b.getMeanRating());
         }
-        return Math.abs(sumTop / (Math.sqrt(sumBottomLeft) * Math.sqrt(sumBottomRight)));
+        return Math.abs(sumTop / (Math.sqrt(sumBottomLeft * sumBottomRight)));
     }
 
     protected double countPower(double num) {
