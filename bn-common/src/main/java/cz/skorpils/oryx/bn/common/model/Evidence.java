@@ -31,11 +31,15 @@ public class Evidence {
     }
 
     public boolean isForNode(Node node){
-        return node.isParentLayer(layer);
+        return node.isLayer(layer);
     }
 
     @Override
     public String toString() {
         return "Evidence "+layer+values.toString();
+    }
+
+    public boolean isForLayer(Node node) {
+        return node.isLayer(layer);
     }
 }

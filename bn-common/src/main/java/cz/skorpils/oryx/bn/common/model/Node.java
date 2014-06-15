@@ -49,6 +49,9 @@ public abstract class Node<ParentNodeType extends Node,ChildrenNodeType extends 
         if(evidence.isForNode(this)){
             return getNodeCondProbability(val,evidence);
         }
+        if(evidence.isForLayer(this)){
+            return val>0?1d/container.getMaxValue():0d;
+        }
         double result=0d;
         Iterator<Long> iterator=getParents().keySetIterator();
         while (iterator.hasNext()){
