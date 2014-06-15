@@ -26,16 +26,16 @@ public class ItemNode extends Node<FeatureNode,UserNode> {
 
     @Override
     protected double weight(long parentId,int parentVal,int myVal){
-        if(parentVal==0){
+        if(parentVal!=1){
             return 0;
         }
-        double top=Math.log(1d/(double)parents.get(parentId).getNodeCondProbability(parentVal, null)+1);
+        double top=Math.log(1d/parents.get(parentId).getNodeCondProbability(parentVal, null)+1d);
         double bottomLeft=Math.log((double)container.size()+1d);
         double bottomRight=0d;
         Iterator<Long> it=parents.keySetIterator();
         while (it.hasNext()){
             long id=it.next();
-            bottomRight+=Math.log((1d/parents.get(id).getNodeCondProbability(1, null))+1)/Math.log((double)container.size()+1d);
+            bottomRight+=Math.log((1d/parents.get(id).getNodeCondProbability(1, null))+1d)/Math.log((double)container.size()+1d);
         }
         return top/(bottomLeft*bottomRight);
     }
